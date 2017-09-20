@@ -5,82 +5,38 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <title>TocaHores</title>
+        <link href="css/style.css" type="text/css" rel="stylesheet">
+        {{-- <link href="{{mix('css/app.css')}}" type="text/css" rel="stylesheet"> --}}
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            {{ Form::open(['url' =>  'message', 'method' => 'post']) }}
-            {{ Form::input('text', 'inp', null, ["placeholder" => "hello"]) }}
-            {{ Form::submit("send", ["class" => 'hidden']) }}
-            {{ Form::close() }}
+        <div class="patient">
+          {{ Form::open(['url' =>  'unlock', 'method' => 'post']) }}
+          {{ Form::input('text', 'inp', null, ["placeholder" => "hello"]) }}
+          {{ Form::submit("send", ["class" => 'hidden']) }}
+          {{ Form::close() }}
         </div>
+        <div class="overview">
+          <div class="title">
+            <p>Afdelingen</p>
+            <p>Totaal beddenenvrij</p>
+            <p>Komt vrij</p>
+          </div>
+          <div class="content">
+            <div class="kube">A</div>
+            <div class="detail">
+              <p>Opnamenkamer</p>
+              <p>4</p>
+              <p></p>
+              <p>Uitslaapkamer</p>
+              <p>0</p>
+              <p>1 uur 22 Minuten</p>
+              <p class="notification"></p>
+            </div>
+          </div>
+        </div>
+        <!-- script -->
+        {{-- <script src="{{mix('js/app.js')}}" type="text/javascript"></script>
+        @stack('customscripts') --}}
     </body>
 </html>
