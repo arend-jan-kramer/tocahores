@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 class pattientController extends Controller
 {
     public function index() {
-        return $_POST['inp'];
+        return view('layouts.overzicht');
+    }
+    public function dossier() {
+      return view('layouts.dossier');
     }
 }

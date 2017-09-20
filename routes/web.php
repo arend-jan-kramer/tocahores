@@ -11,8 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/unlock', 'pattientController@index');
+Route::get('/', 'pattientController@index');
+Route::post('/dossier', 'pattientController@dossier');
