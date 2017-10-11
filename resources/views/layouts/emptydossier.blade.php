@@ -3,32 +3,31 @@
 @section('bodyy')
   <div class='modal'>
     <div class="modal-layout">
-      {{ Form::open(['url' => 'dossier/update', 'method' => 'post', 'class' => 'form-layout']) }}
+      {{ Form::open(['url' => 'dossier/create', 'method' => 'post', 'class' => 'form-layout']) }}
       <div class="group">
         <label for="">Naam:</label>
-        {{ Form::input('text', 'inp_first_name', $dossier->first_name) }}
+        {{ Form::input('text', 'inp_first_name', $_POST['inp']) }}
       </div>
       <div class="group">
         <label for="">Tussenvoegsel:</label>
-        {{ Form::input('text', 'inp_insection', $dossier->insection) }}
+        {{ Form::input('text', 'inp_insection', null) }}
       </div>
       <div class="group">
         <label for="">Achternaam:</label>
-        {{ Form::input('text', 'inp_last_name', $dossier->last_name) }}
+        {{ Form::input('text', 'inp_last_name', null) }}
       </div>
       <div class="group">
         <label for="">Geboortedatum:</label>
-        {{ Form::input('text', 'inp_date_of_birth', $dossier->date_of_birth) }}
-        {{-- {{ Form::input('text', 'inp_date_of_birth', date('d-m-Y', strtotime($dossier->date_of_birth))) }} --}}
+        {{ Form::input('text', 'inp_date_of_birth', null) }}
       </div>
       <div class="group">
         <label for="">Adres:</label>
-        {{ Form::input('text', 'inp_address', $dossier->address, ['class' => 'split2_3']) }}
-        {{ Form::input('text', 'inp_address_number', $dossier->address_number, ['class' => 'split1_3']) }}
+        {{ Form::input('text', 'inp_address', null, ['class' => 'split2_3']) }}
+        {{ Form::input('text', 'inp_address_number', null, ['class' => 'split1_3']) }}
       </div>
       <div class="group">
         <label for="">Woonplaats:</label>
-        {{ Form::input('text', 'inp_city', $dossier->city) }}
+        {{ Form::input('text', 'inp_city', null) }}
       </div>
       <div class="group full-width">
         <label for="">Reden opnamen:</label>

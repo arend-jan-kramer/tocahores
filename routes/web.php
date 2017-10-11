@@ -11,5 +11,11 @@
 |
 */
 
-Route::get('/', 'pattientController@index');
+Route::get('/', 'pattientController@lock');
+Route::post('/', 'pattientController@unlock');
+Route::get('/{id}', 'pattientController@index');
 Route::post('/dossier', 'pattientController@dossier');
+Route::post('/dossier/create', 'pattientController@create');
+Route::post('/dossier/update', 'pattientController@update');
+Route::post('/user/new', 'pattientController@newuser');
+Route::post('/user/delete', 'pattientController@deleteuser');

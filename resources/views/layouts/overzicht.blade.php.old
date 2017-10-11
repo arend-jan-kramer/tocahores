@@ -20,10 +20,10 @@
         Afdelingen
       </div>
       <div class="header_row">
-        @foreach($departmentall as $departmentall)
+        @foreach($departments as $department)
           <div class="block">
-            <a href="{{$departmentall->id}}" class="inner {{ Request::is($departmentall->id) ? 'active' : '' }}">
-              {{ $departmentall->short_name }}
+            <a href="{{$department->id}}" class="inner {{ Request::is($department->id) ? 'active' : '' }}">
+              {{ $department->short_name }}
             </a>
           </div>
         @endforeach
@@ -33,32 +33,32 @@
     <div class="content">
         <div class="description">
           <div class="title bold capitalize">
-            {{ $department->name }} <b class="warning">{{ $department->description}}</b>
+            {{ $departments[$nr]->name }}
           </div>
-          @foreach($department->rooms as $room)
+          @foreach($rooms as $room)
+            @if($room->department_id == $departments[$nr]->id)
             <ul>
               <li>{{ $room->description }}</li>
               <li>
-                @if($room->status == 0)
-                  leeg
-                @else
-                  vol
-                @endif
+                {{-- vol / empty --}}
+                vol
               </li>
-              <li>kamer vrij over # uur ## minuten</li>
+              <li>kamer vrij over 1 uur 22 minuten</li>
+              <li class="warning">Let op!</li>
             </ul>
+            @endif
           @endforeach
       </div>
     </div>
 
     <div class="bed">
-      @foreach($department->beds as $hbed)
+      @foreach($hospital_beds as $hbed)
         @if(strpos($hbed->name, 'b01') !== false)
           <div class="clear" style="clear:both;"></div>
         @endif
         <div class="row_block room_{{$hbed->room}}">
-          <label for="{{ $hbed->name }}" class="radiobutton ">
-          <input type="radio" name="patient" id="{{ $hbed->name }}" ></label>
+          <label for="{{ $hbed->name }}" class="radiobutton {{-- checked --}}">
+          <input type="radio" name="patient" id="{{ $hbed->name }}" {{-- class="hidden"--}}></label>
           <div class="status color_{{$hbed->status}}"></div>
           <div class="number">{{ $hbed->name }}</div>
         </div>

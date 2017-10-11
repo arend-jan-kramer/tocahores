@@ -13,13 +13,24 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Patient::class, function (Faker $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'first_name' => $faker->firstname,
+        'insection' => 'de',
+        'last_name' => $faker->lastname,
+        'address' => $faker->streetName                          ,
+        'address_number' => $faker->buildingNumber,
+        'city' => $faker->city,
+        'date_of_birth' => $faker->date($format = 'Y-m-d', $max = 'now'),
+    ];
+});
+
+$factory->define(App\Password::class, function (Faker $faker) {
+    static $password;
+
+    return [
+        'password' => $faker->password,
     ];
 });

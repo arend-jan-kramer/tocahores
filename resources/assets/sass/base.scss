@@ -1,14 +1,34 @@
 .hidden {
   display: none;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   outline: none;
 }
+
 body {
-  .patient {
+  background: #e0e0e0;
+  .menu {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    .patients,
+    .settings {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
     .form-layout {
       width: 100%;
       margin: 30px auto;
@@ -27,59 +47,119 @@ body {
     width: 100%;
     margin: 0 auto;
     max-width: 1200px;
-    .title {
-      background: #454545;
+    .header {
+      background: #FFF;
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
-      padding: 30px 30px 30px 210px;
-      .row {
-        width: calc((100% - 30px) / 3);
-      }
-      p {
-        display: inline-block;
+      border: 1px solid #454545;
+      width: 100%;
+      float: left;
+      .title {
+        background: #454545;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        padding: 30px;
         color: #FFF;
-        font-size: 30px;
+        font-size: 30pt;
+      }
+      .header_row {
+        padding: 0 10px;
+        .block {
+          float: left;
+          margin: 10px;
+          a {
+            text-decoration: none;
+            font-size: 35px;
+          }
+          a.inner {
+            padding: 12px;
+            background: #454545;
+            border: 2px solid #999;
+            color: #FFF;
+            float: left;
+            &.active {
+              background: #999;
+              border: 2px solid #454545;
+            }
+          }
+        }
       }
     }
     .content {
-      border: 1px solid black;
+      border: 1px solid #454545;
       background: #FFF;
-      float: left;
+      margin: 15px 0;
+      padding: 10px;
       width: 100%;
-      padding: 15px;
-      .kube {
-        position: relative;
-        float: left;
-        border: 2px solid #000;
-        background: #666;
-        text-align: center;
-        a {
-          color: #FFF;
-          font-size: 90px;
-          padding: 20px 50px;
-          text-decoration: none;
+      float: left;
+      .description {
+        ul {
+          list-style: none;
+          li:first-child {
+            padding-left: 0;
+            width: 130px;
+          }
+          li:nth-child(3) {
+            width: 300px;
+          }
+          li {
+            display: inline-block;
+            padding: 0px 30px 5px;
+          }
         }
-        a:hover {
-          text-decoration: none;
+        .warning { color: red; font-weight: bold; margin-left: 23px;}
+        .title {
+          width: 100%;
+          float: left;
         }
       }
-      .detail {
+    }
+    .bed {
+      background: #FFF;
+      border: 1px solid #454545;
+      float: left;
+      width: 100%;
+      .row_block {
+        padding: 20px;
         float: left;
-        width: calc(100% - 169px);
-        padding: 0 24px;
-        .row {
-          float: left;
-          width: 33%;
+        div {
+          display: inline-block;
         }
-        p {
-          min-height: 48px;
+        &.kolumn {
+          background: #454545;
+          color: #fff;
           font-size: 30px;
-          color: #000;
-          &.timer {
-
+        }
+        .radiobutton {
+          float: left;
+          border: 5px solid #666;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          background: #999;
+          &.checked {
+            background: #555;
+            border: 5px solid #999;
           }
-          &.notification {
-            color: red;
+        }
+        .number {
+          font-size: 30px;
+          text-transform: uppercase;
+          float: left;
+        }
+        .status {
+          width: 10px;
+          height: 30px;
+          margin: 0 5px;
+          float: left;
+          &.color_0 {
+            background: green;
+          }
+          &.color_1 {
+            background: red;
+          }
+          &.color_2 {
+            background: orange;
           }
         }
       }
@@ -109,6 +189,9 @@ body {
     margin: auto;
     border-radius: 30px;
     overflow: auto;
+    &.small {
+      min-width: 600px;
+    }
     &::-webkit-scrollbar-track
     {
       -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -128,47 +211,7 @@ body {
       -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
       background-color: #454545;
     }
-    .row {
-      width: 20%;
-      padding: 20px;
-      float: left;
-      div {
-        display: inline-block;
-      }
-      &.kolumn {
-        background: #454545;
-        color: #fff;
-        font-size: 30px;
-      }
-      .radiobutton {
-        float: left;
-        border: 5px solid #666;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        background: #999;
-        &.checked {
-          background: #555;
-          border: 5px solid #999;
-        }
-      }
-      .number {
-        font-size: 30px;
-      }
-      .status {
-        width: 10px;
-        height: 20px;
-        &.green {
-          background: green;
-        }
-        &.red {
-          background: red;
-        }
-        &.orange {
-          background: orange;
-        }
-      }
-    }
+
     .kolumn:nth-child(5){
       border-top-right-radius: 30px;
     }
@@ -179,6 +222,11 @@ body {
 }
 
 .form-layout {
+  &.vertical {
+    .group {
+      width: 100%;
+    }
+  }
   .group {
     &.full-width {
       width: 100%;
@@ -196,9 +244,6 @@ body {
         }
         &.btn-send {
           background: green;
-        }
-        &.btn-cancel {
-          background: red;
         }
       }
       .btn-send:hover {

@@ -11,9 +11,12 @@
     <body>
         @yield('bodyy')
         <!-- script -->
+        <div id="app">
 
-        @include('modal.bed')
+        </div>
         @include('modal.lock')
+        @include('modal.settings')
+        @include('modal.popup')
 
         <script src="{{mix('js/app.js')}}" type="text/javascript"></script>
         @stack('customscripts')
