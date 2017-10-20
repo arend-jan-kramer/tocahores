@@ -62,15 +62,19 @@
     }
   });
   $('.radiobutton input').on('click', function() {
-    $.get('/dossier/'+$(this).val(), function(data){
-      console.log(data[1]);
-      $('#popup #first_name').html(data[1].first_name);
-      $('#popup #last_name').html(data[1].last_name);
-      $('#popup #address').html(data[1].address);
-      $('#popup #address_number').html(data[1].address_number);
-      $('#popup #city').html(data[1].city);
-      $('#popup #description').html(data[0][0].description);
-      $('#popup').modal('show');
-    });
+    if($(this).val().length != 0){
+      $.get('/dossier/'+$(this).val(), function(data){
+        console.log(data[1]);
+        $('#popup #first_name').html(data[1].first_name);
+        $('#popup #last_name').html(data[1].last_name);
+        $('#popup #address').html(data[1].address);
+        $('#popup #address_number').html(data[1].address_number);
+        $('#popup #city').html(data[1].city);
+        $('#popup #description').html(data[0][0].description);
+        $('#popup #removepatiendossier').val(data[0][0].id);
+        $('#popup').modal('show');
+
+      });
+    }
   });
 })(jQuery);

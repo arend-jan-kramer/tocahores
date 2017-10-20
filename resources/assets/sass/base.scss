@@ -120,6 +120,9 @@ body {
             padding-left: 0;
             width: 130px;
           }
+          li:nth-child(2) {
+            width: 100px;
+          }
           li:nth-child(3) {
             width: 300px;
           }
@@ -284,6 +287,12 @@ body {
     }
   }
   .group {
+    &.error {
+      input {
+        color: red!important;
+        border: 1px solid red;
+      }
+    }
     &.full-width {
       width: 100%;
     }

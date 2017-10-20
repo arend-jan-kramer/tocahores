@@ -6,7 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rooms extends Model
 {
-    public function department(){
-      return $this->belongsTo(Department::class);
-    }
+    public $timestamps = false;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+     protected $fillable = [
+       'status'
+     ];
+
+     /**
+      * The attributes that should be hidden for arrays.
+      *
+      * @var array
+      */
+     protected $hidden = [];
 }

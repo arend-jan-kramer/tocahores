@@ -26,8 +26,15 @@ class pattientController extends Controller
     }
 
     public function index($id) {
+      // test hierboven
+      $department = Department::find($id);
       $departmentall = Department::all();
-      $department = Department::findorFail($id);
+      $hospital_beds = Hospital_beds::all();
+
+      if(empty($department)){
+        return redirect()->back();
+      }
+
       $emails = Emails::pluck('email', 'id');
       return view('layouts.overzicht')->with(compact('department', 'departmentall', 'emails'));
     }
@@ -37,17 +44,22 @@ class pattientController extends Controller
       return [$patient->dossiers, $patient];
     }
 
+    public function dismisPatient(Request $request) {
+      $patient = Patient::findorFail($request->user_id);
+      Dossier::where('patient_id', $patient->id)
+        ->update([
+          'status' => 0,
+        ]);
+      Hospital_beds::where('patient_id', $patient->id)
+        ->update(['patient_id' => null, 'status' => 2]);
+      return redirect()->back();
+    }
+
     public function dossier() {
       $patient = Patient::where('first_name', $_POST['inp'])
         ->orwhere('last_name', $_POST['inp'])
         ->first();
       $departments = Department::pluck('name', 'id');
-
-      // if(!empty($patient)) {
-      //   dd(Carbon::now()->toDateTimeString(), $patient->date_of_birth);
-      // }else {
-      //   dd(Carbon::now()->toDateTimeString());
-      // }
 
       if(!$patient) {
         return view('layouts.newpatient')->with(compact('departments','emails'));
@@ -69,7 +81,25 @@ class pattientController extends Controller
       ]);
 
       $patient_id = Patient::orderBy('id', 'desc')->first();
-      $bed = Hospital_beds::where('status', 0)->first();
+
+      $bed = Hospital_beds::where('status', 0)
+        ->where('department_id', $_POST['inp_department'])
+        ->where('patient_id', null)
+        ->first();
+
+      $bed->status = 1;
+      $bed->patient_id = $patient->id;
+      $bed->save();
+      $bed_count = Hospital_beds::where('room', $bed->room)
+      ->where('patient_id', null)
+      ->where('status', 0)
+      ->count();
+
+      if(empty($bed_count)){
+        Rooms::find($bed->room)->update([
+          'status' => 1,
+        ]);
+      }
 
       Dossier::create([
         'patient_id' => $patient_id->id,
@@ -78,7 +108,7 @@ class pattientController extends Controller
         'hospital_bed_id' => $bed->id,
       ]);
 
-      return redirect('1');
+      return redirect($bed->department_id);
     }
 
     public function update() {
@@ -96,26 +126,39 @@ class pattientController extends Controller
         'date_of_birth' => carbon::createFromFormat('d-m-yy', $_POST['inp_date_of_birth'])->toDateTimeString(),
       ]);
 
-      $bed = Hospital_beds::where('status', 0)->where('department_id', $_POST['inp_department'])->first();
+      $dossier = Dossier::where('patient_id', $patient->id)
+        ->where('status', 1)
+        ->count();
 
-      Hospital_beds::where('id', $bed->id)->update([
-        'status' => 1,
-        'patient_id' => $patient->id,
-      ]);
+      if($dossier >= 0) {
+        return redirect('1')->withErrors(['msg' => 'Deze patient is al in het ziekenhuis']);
+      }else {
+        $bed = Hospital_beds::where('status', 0)->where('department_id', $_POST['inp_department'])->first();
 
-      Dossier::create([
-        'patient_id' => $patient->id,
-        'description' => $_POST['inp_reason'],
-        'status' => 1,
-        'hospital_bed_id' => $bed->id,
-      ]);
+        if(empty($bed)) {
+          return redirect('1')->withErrors(['msg' => 'Geen bed vrij!']);
+        }
 
-      return redirect('1');
+        $bed->status = 1;
+        $bed->patient_id = $patient->id;
+        $bed->save();
+
+        Dossier::create([
+          'patient_id' => $patient->id,
+          'description' => $_POST['inp_reason'],
+          'status' => 1,
+          'hospital_bed_id' => $bed->id,
+        ]);
+      }
+      return redirect($bed->department_id);
     }
 
-    public function newuser() {
+    public function newuser(Request $request) {
       // registreren van een nieuwe email gebruiker
-      Emails::create(['email' => $_POST['create_email']."@ziekenhuis-rotterdam.nl"]);
+      $this->validate($request, [
+        'email' => 'max:15|min:3|required',
+      ]);
+      Emails::create(['email' => $request->create_email."@ziekenhuis-rotterdam.nl"]);
       return redirect()->back();
     }
 

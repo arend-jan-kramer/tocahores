@@ -11,7 +11,6 @@
     </head>
     <body>
         @yield('bodyy')
-
         @include('modal.lock')
         @include('modal.settings')
         @include('modal.popup')

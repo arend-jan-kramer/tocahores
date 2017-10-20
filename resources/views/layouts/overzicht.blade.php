@@ -16,15 +16,11 @@
   </div>
   <div class="overview">
     <div class="header">
-      <div class="title">
-        Afdelingen
-      </div>
+      <div class="title">Afdelingen</div>
       <div class="header_row">
         @foreach($departmentall as $departmentall)
           <div class="block">
-            <a href="{{$departmentall->id}}" class="inner {{ Request::is($departmentall->id) ? 'active' : '' }}">
-              {{ $departmentall->short_name }}
-            </a>
+            <a href="{{$departmentall->id}}" class="inner {{ Request::is($departmentall->id) ? 'active' : '' }}">{{ $departmentall->short_name }}</a>
           </div>
         @endforeach
       </div>
@@ -33,19 +29,13 @@
     <div class="content">
         <div class="description">
           <div class="title bold capitalize">
-            {{ $department->name }} <b class="warning">{{ $department->description}}</b>
+            {{ $department->name }} <b class="warning">{{ $department->description}}@if($errors->has('msg')){{$errors->first()}}@endif</b>
           </div>
           @foreach($department->rooms as $room)
             <ul>
-              <li>{{ $room->description }}</li>
-              <li>
-                @if($room->status == 0)
-                  leeg
-                @else
-                  vol
-                @endif
-              </li>
-              <li>kamer vrij over # uur ## minuten</li>
+              <li> {{ $room->description }} </li>
+              <li> @if($room->status == 0)leeg @else vol @endif</li>
+              <li> kamer vrij over # uur ## minuten </li>
             </ul>
           @endforeach
       </div>
@@ -61,9 +51,7 @@
             <input type="radio" name="patient" id="{{ $hbed->name }}" value="{{$hbed->patient_id}}" class="hidden" >
           </label>
           <div class="status color_{{$hbed->status}}"></div>
-          <div class="number">
-            {{ $hbed->name }}
-          </div>
+          <div class="number">{{ $hbed->name }}</div>
         </div>
       @endforeach
     </div>

@@ -2,7 +2,7 @@
 <div id="settings" class='modal' hidden>
   <div class="modal-layout small">
     {{ Form::open(['url' => '/user/new', 'method' => 'post', 'class' => 'form-layout vertical']) }}
-    <div class="group">
+    <div class="group {{ $errors->has('email') ? 'error' : ''}}">
       <label>Toevoegen</label>
       {{ Form::input('text', 'create_email', null, ["placeholder" => "naam@ziekenhuis-rotterdam.nl"]) }}
       {{-- {{ Form::submit("send") }} --}}
