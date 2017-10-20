@@ -12,7 +12,7 @@ class Dossier extends Model
      * @var array
      */
      protected $fillable = [
-       'pattient_id',
+       'patient_id',
        'description',
        'status',
        'hospital_bed_id',

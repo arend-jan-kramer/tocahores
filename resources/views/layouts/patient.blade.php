@@ -3,31 +3,32 @@
 @section('bodyy')
   <div class='modal'>
     <div class="modal-layout">
-      {{ Form::open(['url' => 'dossier/create', 'method' => 'post', 'class' => 'form-layout']) }}
+      {{ Form::open(['url' => 'dossier/update', 'method' => 'post', 'class' => 'form-layout', 'id' => 'autofill']) }}
       <div class="group">
         <label for="">Naam:</label>
-        {{ Form::input('text', 'inp_first_name', $_POST['inp']) }}
+        {{ Form::input('text', 'inp_first_name', $patient->first_name) }}
       </div>
       <div class="group">
         <label for="">Tussenvoegsel:</label>
-        {{ Form::input('text', 'inp_insection', null) }}
+        {{ Form::input('text', 'inp_insection', $patient->insection) }}
       </div>
       <div class="group">
         <label for="">Achternaam:</label>
-        {{ Form::input('text', 'inp_last_name', null) }}
+        {{ Form::input('text', 'inp_last_name', $patient->last_name) }}
       </div>
       <div class="group">
         <label for="">Geboortedatum:</label>
-        {{ Form::input('text', 'inp_date_of_birth', null) }}
+        {{-- {{ Form::input('text', 'inp_date_of_birth', $patient->date_of_birth) }} --}}
+        {{ Form::input('text', 'inp_date_of_birth', date('d-m-Y', strtotime($patient->date_of_birth)), ['placeholder' => 'd-m-yyyy', 'id' => 'datum']) }}
       </div>
       <div class="group">
         <label for="">Adres:</label>
-        {{ Form::input('text', 'inp_address', null, ['class' => 'split2_3']) }}
-        {{ Form::input('text', 'inp_address_number', null, ['class' => 'split1_3']) }}
+        {{ Form::input('text', 'inp_address', $patient->address, ['class' => 'split2_3']) }}
+        {{ Form::input('number', 'inp_address_number', $patient->address_number, ['class' => 'split1_3']) }}
       </div>
       <div class="group">
         <label for="">Woonplaats:</label>
-        {{ Form::input('text', 'inp_city', null) }}
+        {{ Form::input('text', 'inp_city', $patient->city) }}
       </div>
       <div class="group full-width">
         <label for="">Reden opnamen:</label>

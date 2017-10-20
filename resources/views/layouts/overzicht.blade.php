@@ -4,7 +4,7 @@
   <div class="menu">
     <div class="pattient">
       {{ Form::open(['url' =>  '/dossier', 'method' => 'post', 'class' => 'form-layout']) }}
-      {{ Form::input('text', 'inp', null, ["placeholder" => "Naam patiënt"]) }}
+      {{ Form::input('text', 'inp', null, ["placeholder" => "Naam patiënt", 'id' => 'dark']) }}
       {{ Form::submit("send", ["class" => 'hidden']) }}
       {{ Form::close() }}
       <div class="settings">
@@ -58,18 +58,15 @@
         @endif
         <div class="row_block room_{{$hbed->room}}">
           <label for="{{ $hbed->name }}" class="radiobutton ">
-          <input type="radio" name="patient" id="{{ $hbed->name }}" ></label>
+            <input type="radio" name="patient" id="{{ $hbed->name }}" value="{{$hbed->patient_id}}" class="hidden" >
+          </label>
           <div class="status color_{{$hbed->status}}"></div>
-          <div class="number">{{ $hbed->name }}</div>
+          <div class="number">
+            {{ $hbed->name }}
+          </div>
         </div>
       @endforeach
     </div>
   </div>
 
 @endsection
-
-@push('customscripts')
-  <script>
-
-  </script>
-@endpush

@@ -18,6 +18,12 @@ class CreateEmailsTable extends Migration
             $table->string('email');
             $table->timestamps();
         });
+        DB::table('emails')->insert([
+          'id' => 1,
+          'email' => 'arend-jan@ziekenhuis-rotterdam.nl',
+          'created_at' => '2017-10-13 10:11:14',
+          'updated_at' => '2017-10-13 10:11:14',
+        ]);
     }
 
     /**

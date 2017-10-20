@@ -21,7 +21,7 @@ class Patients extends Migration
             $table->string('address');
             $table->string('address_number');
             $table->string('city');
-            $table->timestamp('date_of_birth');
+            $table->date('date_of_birth');
             $table->timestamps();
         });
     }

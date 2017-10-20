@@ -35,6 +35,27 @@ body {
       max-width: 1200px;
       text-align: center;
       input {
+        &#dark {
+          // background: #666;
+          font-weight: bold;
+          background: url("/img/loop.png") #666 no-repeat right 5px top 5px;
+          &:focus {
+            background: #666;
+          }
+          &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: #999;
+          }
+          &::-moz-placeholder { /* Firefox 19+ */
+            color: #999;
+          }
+          &:-ms-input-placeholder { /* IE 10+ */
+            color: #999;
+          }
+          &:-moz-placeholder { /* Firefox 18- */
+            color: #999;
+          }
+          color: #999;
+        }
         background: #999;
         border: 1px solid #666;
         border-radius: 10px;
@@ -107,7 +128,7 @@ body {
             padding: 0px 30px 5px;
           }
         }
-        .warning { color: red; font-weight: bold; margin-left: 23px;}
+        .warning { color: red; font-weight: bold; margin-left: 23px; text-transform: none; float:right;}
         .title {
           width: 100%;
           float: left;
@@ -119,9 +140,22 @@ body {
       border: 1px solid #454545;
       float: left;
       width: 100%;
+      margin-bottom: 80px;
+      .clear {
+        width: 100%;
+        border-bottom: 1px solid #454545;
+        &:first-child {
+          border-bottom: none;
+        }
+      }
       .row_block {
         padding: 20px;
         float: left;
+        &:hover {
+          .radiobutton {
+            background: #666;
+          }
+        }
         div {
           display: inline-block;
         }
@@ -137,6 +171,7 @@ body {
           width: 30px;
           height: 30px;
           background: #999;
+          cursor: pointer;
           &.checked {
             background: #555;
             border: 5px solid #999;
@@ -146,6 +181,12 @@ body {
           font-size: 30px;
           text-transform: uppercase;
           float: left;
+          a:link {
+            text-decoration: none;
+          }
+          a:visited {
+            color: #000;
+          }
         }
         .status {
           width: 10px;
@@ -166,11 +207,18 @@ body {
     }
   }
 }
+#popup {
+  &.modal{
+    .modal-layout {
+      padding: 20px;
+    }
+  }
+}
 .modal {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0, 0.6);
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -190,7 +238,9 @@ body {
     border-radius: 30px;
     overflow: auto;
     &.small {
-      min-width: 600px;
+      min-width: 420px;
+      max-width: 420px;
+      max-height: 45vh;
     }
     &::-webkit-scrollbar-track
     {
@@ -225,6 +275,12 @@ body {
   &.vertical {
     .group {
       width: 100%;
+      .warning {
+        background: red;
+        color: #FFF;
+        border: 2px solid red;
+        margin-top:5px;
+      }
     }
   }
   .group {
@@ -246,6 +302,22 @@ body {
           background: green;
         }
       }
+      a{
+        text-decoration: none;
+        color: #FFF;
+        &.btn-cancel {
+          &:link{
+            background: red;
+            float: left;
+            width: calc(50% - 30px);
+            margin: 15px;
+            border: 2px solid #454545;
+            font-size: 20px;
+            border-radius: 15px;
+            padding: 10px;
+          }
+        }
+      }
       .btn-send:hover {
         background: lighten(green, 10%);
       }
@@ -255,7 +327,7 @@ body {
     }
     width: calc(100% / 3);
     float: left;
-    padding: 30px;
+    padding: 20px 30px;
     label {
       margin-left: 10px;
       margin-bottom: 15px;

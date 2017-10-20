@@ -21,6 +21,7 @@ class HospitalBeds extends Migration
             $table->string('patient_id')->nullable();
             $table->string('department_id');
             $table->string('room');
+            $table->timestamps();
         });
 
         DB::table('hospital_beds')->insert([

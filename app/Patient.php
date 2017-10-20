@@ -29,7 +29,7 @@ class Patient extends Model
       */
      protected $hidden = [];
 
-     public function patient() {
+     public function dossiers() {
        return $this->hasMany(Dossier::class);
      }
 }

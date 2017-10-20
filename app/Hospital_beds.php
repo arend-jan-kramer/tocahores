@@ -9,4 +9,5 @@ class Hospital_beds extends Model
     public function department(){
       return $this->belongsTo(Department::class);
     }
+
 }

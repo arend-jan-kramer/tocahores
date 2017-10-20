@@ -29,30 +29,31 @@ class pattientController extends Controller
       $departmentall = Department::all();
       $department = Department::findorFail($id);
       $emails = Emails::pluck('email', 'id');
-      // return $department->beds;
       return view('layouts.overzicht')->with(compact('department', 'departmentall', 'emails'));
     }
 
-    // public function index($id) {
-    //   $departments = Department::all();
-    //   $hospital_beds = Hospital_beds::where('department_id', $id)->get();
-    //   $patients = Patient::all();
-    //   $rooms = Rooms::all();
-    //   $nr = $id - 1;
-    //   $emails = Emails::pluck('email', 'id');
-    //   return view('layouts.overzicht')->with(compact('departments', 'rooms', 'hospital_beds', 'nr', 'patients', 'emails'));
-    // }
+    public function getPatient($id) {
+      $patient = Patient::findorFail($id);
+      return [$patient->dossiers, $patient];
+    }
 
     public function dossier() {
+      $patient = Patient::where('first_name', $_POST['inp'])
+        ->orwhere('last_name', $_POST['inp'])
+        ->first();
       $departments = Department::pluck('name', 'id');
-      $dossier = Patient::where('first_name', $_POST['inp'])
-      ->orwhere('last_name', $_POST['inp'])
-      ->first();
-      if(!$dossier) {
-        return view('layouts.emptydossier')->with(compact('departments','emails'));
+
+      // if(!empty($patient)) {
+      //   dd(Carbon::now()->toDateTimeString(), $patient->date_of_birth);
+      // }else {
+      //   dd(Carbon::now()->toDateTimeString());
+      // }
+
+      if(!$patient) {
+        return view('layouts.newpatient')->with(compact('departments','emails'));
       }
       else {
-        return view('layouts.dossier')->with(compact('departments', 'dossier', 'emails'));
+        return view('layouts.patient')->with(compact('departments', 'patient', 'emails'));
       }
     }
 
@@ -64,34 +65,62 @@ class pattientController extends Controller
         'address' => $_POST['inp_address'],
         'address_number' => $_POST['inp_address_number'],
         'city' => $_POST['inp_city'],
-        'date_of_birth' => $_POST['inp_date_of_birth'],
-        // 'date_of_birth' => carbon::createFromFormat('d-m-yy', $_POST['inp_date_of_birth'])->toDateTimeString(),
+        'date_of_birth' => carbon::createFromFormat('d-m-yy', $_POST['inp_date_of_birth'])->toDateTimeString(),
       ]);
+
+      $patient_id = Patient::orderBy('id', 'desc')->first();
+      $bed = Hospital_beds::where('status', 0)->first();
+
       Dossier::create([
-        'pattient_id' => $patient->id,
+        'patient_id' => $patient_id->id,
         'description' => $_POST['inp_reason'],
         'status' => 1,
-        'hospital_bed_id' => 1,
+        'hospital_bed_id' => $bed->id,
       ]);
+
       return redirect('1');
     }
 
     public function update() {
-      $patient = Patient::where('first_name', $_POST['inp'])
+      $patient = Patient::where('first_name', $_POST['inp_first_name'])
         ->orwhere('last_name', $_POST['inp_first_name'])
         ->first();
-      return $patient;
+
+      Patient::where('id', $patient->id)->update([
+        'first_name' => $_POST['inp_first_name'],
+        'insection' => $_POST['inp_insection'],
+        'last_name' => $_POST['inp_last_name'],
+        'address' => $_POST['inp_address'],
+        'address_number' => $_POST['inp_address_number'],
+        'city' => $_POST['inp_city'],
+        'date_of_birth' => carbon::createFromFormat('d-m-yy', $_POST['inp_date_of_birth'])->toDateTimeString(),
+      ]);
+
+      $bed = Hospital_beds::where('status', 0)->where('department_id', $_POST['inp_department'])->first();
+
+      Hospital_beds::where('id', $bed->id)->update([
+        'status' => 1,
+        'patient_id' => $patient->id,
+      ]);
+
+      Dossier::create([
+        'patient_id' => $patient->id,
+        'description' => $_POST['inp_reason'],
+        'status' => 1,
+        'hospital_bed_id' => $bed->id,
+      ]);
+
+      return redirect('1');
     }
 
     public function newuser() {
       // registreren van een nieuwe email gebruiker
-      Emails::create([
-        'email' => $_POST['create_email'],
-      ]);
+      Emails::create(['email' => $_POST['create_email']."@ziekenhuis-rotterdam.nl"]);
       return redirect()->back();
     }
 
     public function deleteuser() {
-      return 'delete user';
+      Emails::find($_POST['delete_email'])->delete();
+      return redirect()->back();
     }
 }

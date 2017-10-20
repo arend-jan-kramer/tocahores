@@ -15,6 +15,9 @@ Route::get('/', 'pattientController@lock');
 Route::post('/', 'pattientController@unlock');
 Route::get('/{id}', 'pattientController@index');
 Route::post('/dossier', 'pattientController@dossier');
+
+Route::get('/dossier/{id}', 'pattientController@getPatient');
+
 Route::post('/dossier/create', 'pattientController@create');
 Route::post('/dossier/update', 'pattientController@update');
 Route::post('/user/new', 'pattientController@newuser');

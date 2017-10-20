@@ -15,7 +15,7 @@ class Dossiers extends Migration
     {
         Schema::create('dossiers', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('pattient_id');
+          $table->string('patient_id');
           $table->string('description');
           $table->string('status');
           $table->string('hospital_bed_id');

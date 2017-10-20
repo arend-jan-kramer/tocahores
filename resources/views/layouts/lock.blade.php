@@ -2,9 +2,9 @@
 
 @section('bodyy')
   <div class='modal'>
-    <div class="modal-layout">
+    <div class="modal-layout small">
       {{ Form::open(['url' => '/unlock', 'method' => 'post', 'class' => 'form-layout']) }}
-      <div class="group">
+      <div class="group full-width">
         <label for="">Wachtwoord</label>
         {{ Form::input('text','unlock', null) }}
       </div>
