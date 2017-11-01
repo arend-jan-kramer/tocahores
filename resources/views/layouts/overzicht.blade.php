@@ -9,7 +9,7 @@
         </a>
       </div>
       {{ Form::open(['url' =>  '/dossier', 'method' => 'post', 'class' => 'form-layout']) }}
-      {{ Form::input('text', 'inp', null, ["placeholder" => "Naam patiënt", 'id' => 'dark']) }}
+      {{ Form::input('text', 'inp', null, ["placeholder" => "Naam patiënt", 'id' => 'dark', "autocomplete" => "off"]) }}
       {{ Form::submit("send", ["class" => 'hidden']) }}
       {{ Form::close() }}
       <div class="settings">

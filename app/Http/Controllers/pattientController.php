@@ -115,16 +115,6 @@ class pattientController extends Controller
     }
 
     public function create(Request $request) {
-      // $this->validate($request, [
-      //   'first_name' => 'max:15|min:3|required',
-      //   'insection' => 'max:5|min:3',
-      //   'last_name' => 'max:15|min:3|required',
-      //   'address' => 'max:15|min:3|required',
-      //   'address_number' => 'max:15|min:3|required|numeric',
-      //   'city' => 'max:15|min:3|required',
-      //   'date_of_birth' => 'max:15|min:3|required',
-      //   'inp_reason' => 'required',
-      // ]);
       $patient = Patient::create([
         'first_name' => $request->inp_first_name,
         'insection' => $request->inp_insection,
@@ -168,16 +158,6 @@ class pattientController extends Controller
     }
 
     public function update(Request $request) {
-      // $this->validate($request, [
-      //   // 'first_name' => 'max:15|min:3|required',
-      //   // 'insection' => 'max:5|min:3',
-      //   // 'last_name' => 'max:15|min:3|required',
-      //   // 'address' => 'max:15|min:3|required',
-      //   // 'address_number' => 'max:15|min:3|required|numeric',
-      //   // 'city' => 'max:15|min:3|required',
-      //   // 'date_of_birth' => 'max:15|min:3|required',
-      //   'inp_reason' => 'required',
-      // ]);
       $patient = Patient::where('first_name', $request->inp_first_name)
         ->orwhere('last_name', $request->inp_first_name)
         ->first();
@@ -230,5 +210,12 @@ class pattientController extends Controller
       return redirect($bed->department_id);
     }
 
-
+    public function getPatientScript($id) {
+      $patient = Patient::first()->findorFail($id);
+      $data = [
+        'patient' => $patient,
+        'dossier' => $patient->latest,
+      ];
+      return $data;
+    }
 }

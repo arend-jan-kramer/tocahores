@@ -11300,23 +11300,26 @@ __webpack_require__(30);
     }
   });
   $('.radiobutton input').on('click', function () {
-    if ($(this).val().length != 0) {
-      $.get('/dossier/' + $(this).val(), function (data) {
-        $('#popup #first_name').html(data[1].first_name);
-        $('#popup #last_name').html(data[1].last_name);
-        // $('#popup #address').html(data[1].address);
-        // $('#popup #address_number').html(data[1].address_number);
-        // $('#popup #city').html(data[1].city);
-        // $('#popup #description').html(data[0][0].description);
-        $('#popup #removepatiendossier').val(data[1].id);
-        $('#popup').modal('show');
+    // var id = $(this).val();
+    // console.log($(this).val());
+    $.get('/get/dossier/' + $(this).val(), function (data) {
+      $.each(data.patient, function (key, value) {
+        $('#popup #' + key).html(value);
+        // console.log(key+' '+value);
       });
-    }
+      $.each(data.dossier, function (key, value) {
+        $('#popup #' + key).html(value);
+        // console.log(key+' '+value);
+      });
+      $('#popup #removepatiendossier').val(data.patient.id);
+      $('#popup').modal('show');
+    });
   });
+
   $('#dossier_id').on('change', function () {
     // console.log($('option:selected').attr('class'));
-    console.log($(this).val());
-    console.log($('.getName').val());
+    // console.log($(this).val());
+    // console.log($('.getName').val());
     if ($('option:selected').attr('class') !== undefined) {
       $.get('/dossier/' + $('.getName').val() + '/' + $(this).val(), function (data) {
         $('.group .description').val(data.description).prop("disabled", true).addClass('lock');

@@ -32,4 +32,9 @@ class Patient extends Model
      public function dossiers() {
        return $this->hasMany(Dossier::class);
      }
+
+     public function latest()
+     {
+       return $this->hasOne(Dossier::class)->latest();
+     }
 }
