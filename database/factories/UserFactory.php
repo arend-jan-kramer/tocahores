@@ -31,6 +31,6 @@ $factory->define(App\Password::class, function (Faker $faker) {
     static $password;
 
     return [
-        'password' => $faker->password,
+        'password' => $faker->regexify('[A-Z0-9._%+-]+@[A-Z0-9.-]+\[A-Z]{2,4}'),
     ];
 });

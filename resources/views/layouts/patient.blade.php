@@ -2,11 +2,25 @@
 
 @section('bodyy')
   <div class='modal'>
-    <div class="modal-layout">
+    <div class="modal-layout head">
+      <div class="kop">
+        <div class="twee-3">
+          Patiënt: {{$patient->first_name}}
+        </div>
+        <div class="een-3">Dossier nummer:<select id="dossier_id" class="right">
+          @foreach($dossiers as $dossier)
+            <option class="exists" value="{{$dossier->id}}">S{{sprintf("%07s", $dossier->id)}}</option>
+          @endforeach
+          <option value="{{$nr->id+1}}" selected>
+            S{{ sprintf("%07s", $nr->id+1) }}
+          </option>
+          </select>
+        </div>
+      </div>
       {{ Form::open(['url' => 'dossier/update', 'method' => 'post', 'class' => 'form-layout', 'id' => 'autofill']) }}
       <div class="group">
         <label for="">Naam:</label>
-        {{ Form::input('text', 'inp_first_name', $patient->first_name) }}
+        {{ Form::input('text', 'inp_first_name', $patient->first_name, ['class' => 'getName']) }}
       </div>
       <div class="group">
         <label for="">Tussenvoegsel:</label>
@@ -32,7 +46,7 @@
       </div>
       <div class="group full-width">
         <label for="">Reden opnamen:</label>
-        {{ Form::textarea('inp_reason', null, ["size" => '30x5']) }}
+        {{ Form::textarea('inp_reason', null, ["size" => '30x5', 'class' => 'description']) }}
       </div>
       <div class="group">
         <label for="">Afdeling</label>

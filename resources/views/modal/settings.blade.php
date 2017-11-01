@@ -4,7 +4,7 @@
     {{ Form::open(['url' => '/user/new', 'method' => 'post', 'class' => 'form-layout vertical']) }}
     <div class="group {{ $errors->has('email') ? 'error' : ''}}">
       <label>Toevoegen</label>
-      {{ Form::input('text', 'create_email', null, ["placeholder" => "naam@ziekenhuis-rotterdam.nl"]) }}
+      {{ Form::input('text', 'create_email', null, ["placeholder" => "naam@ziekenhuis-rotterdam.nl", 'autofocus' => true]) }}
       {{-- {{ Form::submit("send") }} --}}
       {{ Form::submit("send", ["class" => 'hidden']) }}
     </div>
@@ -14,7 +14,7 @@
     <div class="group">
       <label>Verwijderen</label>
       {{ Form::select('delete_email', $emails, null) }}
-      {{ Form::submit("Verwijderen", ['class' => 'warning']) }}
+      {{ Form::submit("Verwijderen", ['class' => 'btn btn-warning']) }}
       {{-- {{ Form::submit("send", ["class" => 'hidden']) }} --}}
     </div>
     {{ Form::close() }}

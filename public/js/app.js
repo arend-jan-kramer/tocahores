@@ -11242,21 +11242,41 @@ __webpack_require__(30);
 
 
 (function ($) {
-  $('#datum, input, textarea').on('keyup, click', function () {
+  var delay = 5000;
+  // var delay = 30000;
+  var url = "http://project.tocahores/";
+  var t;
+
+  // if(window.location.href != url) {
+  //   t = setTimeout(function(){
+  //     window.location.href = url;
+  //   }, delay);
+  //
+  //   $(this).mousemove(function(){
+  //   clearTimeout(t);
+  //     t = setTimeout(function(){
+  //       window.location.href = url;
+  //     }, delay);
+  //   });
+  // }
+
+  $('#datum, input').on('keyup', function () {
     var d = new Date();
 
     var birth = new Date($(this).val());
 
     d.setFullYear(d.getFullYear() - 14);
 
-    if (d.getFullYear() >= birth.getFullYear()) {
+    if (d.getFullYear() < birth.getFullYear()) {
       $('option[value=4]').show();
     } else {
       $('option[value=4]').hide();
     }
+    // console.log(d.getFullYear(), birth.getFullYear() );
   });
+
   $('#autofill input, #autofill textarea').on('keypress click', function (e) {
-    if (e.shiftKey) {
+    if (e.shiftKey && $(this).val().length == 0) {
       switch ($(this).attr('name')) {
         case 'inp_first_name':
           $(this).val('Mikel');
@@ -11282,16 +11302,27 @@ __webpack_require__(30);
   $('.radiobutton input').on('click', function () {
     if ($(this).val().length != 0) {
       $.get('/dossier/' + $(this).val(), function (data) {
-        console.log(data[1]);
         $('#popup #first_name').html(data[1].first_name);
         $('#popup #last_name').html(data[1].last_name);
-        $('#popup #address').html(data[1].address);
-        $('#popup #address_number').html(data[1].address_number);
-        $('#popup #city').html(data[1].city);
-        $('#popup #description').html(data[0][0].description);
-        $('#popup #removepatiendossier').val(data[0][0].id);
+        // $('#popup #address').html(data[1].address);
+        // $('#popup #address_number').html(data[1].address_number);
+        // $('#popup #city').html(data[1].city);
+        // $('#popup #description').html(data[0][0].description);
+        $('#popup #removepatiendossier').val(data[1].id);
         $('#popup').modal('show');
       });
+    }
+  });
+  $('#dossier_id').on('change', function () {
+    // console.log($('option:selected').attr('class'));
+    console.log($(this).val());
+    console.log($('.getName').val());
+    if ($('option:selected').attr('class') !== undefined) {
+      $.get('/dossier/' + $('.getName').val() + '/' + $(this).val(), function (data) {
+        $('.group .description').val(data.description).prop("disabled", true).addClass('lock');
+      });
+    } else {
+      $('.group .description').val('').prop("disabled", false).removeClass('lock');
     }
   });
 })(jQuery);

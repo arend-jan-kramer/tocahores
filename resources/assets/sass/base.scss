@@ -23,6 +23,12 @@ body {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
+    .lock {
+      position:  absolute;
+      img {
+        height: 30px;
+      }
+    }
     .patients,
     .settings {
       position: absolute;
@@ -131,7 +137,7 @@ body {
             padding: 0px 30px 5px;
           }
         }
-        .warning { color: red; font-weight: bold; margin-left: 23px; text-transform: none; float:right;}
+        .warning {float:right;}
         .title {
           width: 100%;
           float: left;
@@ -213,6 +219,16 @@ body {
 #popup {
   &.modal{
     .modal-layout {
+      .form-layout {
+        float: left;
+        width: 100%;
+      }
+      .header {
+        background: #454545;
+        margin: -20px -20px 0;
+        padding: 20px;
+        color: #FFF;
+      }
       padding: 20px;
     }
   }
@@ -235,15 +251,56 @@ body {
     background: #FFF;
     border: 1px solid #000;
     width: 95vh;
-    height: 95vh;
+    height: 550px;
     min-width: 1200px;
     margin: auto;
     border-radius: 30px;
     overflow: auto;
+    &.head {
+      height: 620px;
+    }
+    .kop {
+        float: left;
+        width: 100%;
+        background: #454545;
+        padding: 20px;
+        font-size: 24px;
+        line-height: 50px;
+        color: #FFF;
+
+        select {
+          &.right {
+            width: 160px;
+            float: right;
+            border: 2px solid #454545;
+            background: #999;
+            color: #454545;
+            font-size: 20px;
+            border-radius: 15px;
+            padding: 10px;
+          }
+        }
+        .een-3 {
+          float: left;
+          width: 30%;
+        }
+        .twee-3 {
+          float: left;
+          width: 70%;
+          .right {
+            float: right;
+          }
+        }
+    }
     &.small {
       min-width: 420px;
       max-width: 420px;
-      max-height: 45vh;
+      height: 305px;
+    }
+    &.password {
+      height: 170px;
+      width: 100px;
+      min-width: 390px;
     }
     &::-webkit-scrollbar-track
     {
@@ -278,15 +335,36 @@ body {
   &.vertical {
     .group {
       width: 100%;
-      .warning {
-        background: red;
-        color: #FFF;
-        border: 2px solid red;
-        margin-top:5px;
+      .btn {
+        &.btn-warning {
+          background: red;
+          color: #FFF;
+          border: 2px solid red;
+          margin-top: 25px;
+        }
+        &.btn-cancel {
+          text-align: center;
+          color: #FFF;
+          &:link,
+          :active {
+            width: 100%;
+            padding: 10px;
+            border-radius: 15px;
+            background: green;
+            color: #FFF;
+            border: 2px solid green;
+            display: inline-block;
+            text-decoration: none;
+          }
+        }
       }
+
     }
   }
   .group {
+    width: calc(100% / 3);
+    float: left;
+    padding: 20px 30px 0;
     &.error {
       input {
         color: red!important;
@@ -300,6 +378,7 @@ body {
       float: right;
     }
     &.options {
+      padding-top: 40px;
       input {
         float: left;
         width: calc(50% - 30px);
@@ -334,9 +413,6 @@ body {
         background: lighten(red, 10%);
       }
     }
-    width: calc(100% / 3);
-    float: left;
-    padding: 20px 30px;
     label {
       margin-left: 10px;
       margin-bottom: 15px;
@@ -353,6 +429,10 @@ body {
       font-size: 20px;
       border-radius: 15px;
       padding: 10px;
+      &.lock {
+        border: 2px solid red !important;
+        color: red;
+      }
     }
     input {
       &.split1_3 {
@@ -364,3 +444,4 @@ body {
     }
   }
 }
+.warning { color: red; font-weight: bold; text-transform: none;}

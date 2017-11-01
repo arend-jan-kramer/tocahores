@@ -11,19 +11,22 @@
 |
 */
 
-Route::get('/', 'pattientController@lock');
-Route::post('/', 'pattientController@unlock');
+Route::get('/', 'LockScreen@login');
+Route::post('/', 'LockScreen@unlock');
 
-// Bekijk afdelingen
-Route::get('/{id}', 'pattientController@index');
+Route::middleware(['lock'])->group(function () {
+  // Bekijk afdelingen
+  Route::get('/{id}', 'pattientController@index');
 
-// Patienten dossiers
-Route::post('/dossier', 'pattientController@dossier');
-Route::get('/dossier/{id}', 'pattientController@getPatient');
-Route::post('/dossier/create', 'pattientController@create');
-Route::post('/dossier/update', 'pattientController@update');
-Route::post('/dossier/remove', 'pattientController@dismisPatient');
+  // Patienten dossiers
+  Route::post('/dossier', 'pattientController@dossier');
+  Route::get('/dossier/{id}', 'pattientController@getPatient');
+  Route::get('/dossier/{patient_id}/{dossier_id}', 'pattientController@getPatientDossier');
+  Route::post('/dossier/create', 'pattientController@create');
+  Route::post('/dossier/update', 'pattientController@update');
+  Route::post('/dossier/remove', 'pattientController@dismisPatient');
 
-// Personeel toevoegen aan mailing lijst
-Route::post('/user/new', 'pattientController@newuser');
-Route::post('/user/delete', 'pattientController@deleteuser');
+  // Personeel toevoegen aan mailing lijst
+  Route::post('/user/new', 'emailController@newuser');
+  Route::post('/user/delete', 'emailController@deleteuser');
+});

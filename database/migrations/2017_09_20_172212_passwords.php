@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Carbon\Carbon;
 
 class Passwords extends Migration
 {
@@ -18,6 +19,10 @@ class Passwords extends Migration
             $table->string('password');
             $table->timestamps();
         });
+
+        DB::table('passwords')->insert([
+          ['password' => 'Welkom01', 'created_at' => Carbon::now() , 'updated_at' => Carbon::now()],
+        ]);
     }
 
     /**

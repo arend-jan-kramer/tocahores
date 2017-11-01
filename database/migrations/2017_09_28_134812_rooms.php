@@ -20,6 +20,7 @@ class Rooms extends Migration
             $table->string('status');
             $table->string('description');
             $table->string('x_bed');
+            $table->timestamps();
         });
 
         DB::table('rooms')->insert([

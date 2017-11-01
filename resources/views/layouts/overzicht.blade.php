@@ -3,6 +3,11 @@
 @section('bodyy')
   <div class="menu">
     <div class="pattient">
+      <div class="lock">
+        <a href="/">
+          <img src="/img/lock.png" title="lock">
+        </a>
+      </div>
       {{ Form::open(['url' =>  '/dossier', 'method' => 'post', 'class' => 'form-layout']) }}
       {{ Form::input('text', 'inp', null, ["placeholder" => "Naam patiënt", 'id' => 'dark']) }}
       {{ Form::submit("send", ["class" => 'hidden']) }}
@@ -35,7 +40,13 @@
             <ul>
               <li> {{ $room->description }} </li>
               <li> @if($room->status == 0)leeg @else vol @endif</li>
-              <li> kamer vrij over # uur ## minuten </li>
+              <li>
+                {{-- && $time[$room->id]['status'] == true --}}
+                @if($room->status == 1 && $time[$room->id]['status'] == true)
+                  {{ $time[$room->id]['time']}}
+                  {{-- <pre>{{var_dump($time)}}</pre> --}}
+                @endif
+              </li>
             </ul>
           @endforeach
       </div>

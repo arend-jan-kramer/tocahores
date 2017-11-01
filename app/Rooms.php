@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rooms extends Model
 {
-    public $timestamps = false;
+    // public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
