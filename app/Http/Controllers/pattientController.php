@@ -29,6 +29,9 @@ class pattientController extends Controller
       $department = Department::find($id);
       $departmentall = Department::all();
       $emails = Emails::pluck('email', 'id');
+      foreach($emails as $key => $value){
+        $emails[$key] = $value."@ziekenhuis-rotterdam.nl";
+      }
       $time = array();
 
       foreach($rooms as $room) {

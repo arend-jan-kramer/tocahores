@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Validator;
 use App\Emails;
 use App\Password;
 
@@ -14,9 +15,9 @@ class emailController extends Controller
     // registreren van een nieuwe email gebruiker
     $this->email = $request->create_email;
     $this->validate($request, [
-      'create_email' => 'max:15|min:3|required',
+      'create_email' => 'max:15|min:3|required|unique:emails,email',
     ]);
-    Emails::create(['email' => $request->create_email."@ziekenhuis-rotterdam.nl"]);
+    Emails::create(['email' => $request->create_email]);
     $data = Password::orderby('updated_at', 'desc')->first();
 
     mail::send('email.welkom', ['data' => $data, 'user' => $this->email], function($message){

@@ -1,10 +1,19 @@
 @if(!empty($emails))
 <div id="settings" class='modal' hidden>
   <div class="modal-layout small">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     {{ Form::open(['url' => '/user/new', 'method' => 'post', 'class' => 'form-layout vertical']) }}
     <div class="group {{ $errors->has('email') ? 'error' : ''}}">
       <label>Toevoegen</label>
-      {{ Form::input('text', 'create_email', null, ["placeholder" => "naam@ziekenhuis-rotterdam.nl", 'autofocus' => true]) }}
+      {{ Form::input('text', 'create_email', null, ["placeholder" => "naam", 'autofocus' => true, "autocomplete" => "off"]) }}
       {{-- {{ Form::submit("send") }} --}}
       {{ Form::submit("send", ["class" => 'hidden']) }}
     </div>

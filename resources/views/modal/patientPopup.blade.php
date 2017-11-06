@@ -9,7 +9,7 @@
         </div>
         <div class="een-3">Dossier nummer:<select id="dossier_id" class="right">
           @foreach($dossiers as $dossier)
-            <option class="exists" value="{{$dossier->id}}">S{{sprintf("%07s", $dossier->id)}}</option>
+            <option class="exists" value="{{$dossier->id}}">{{sprintf("%07s", 's'.$dossier->id)}}</option>
           @endforeach
           <option value="{{$nr->id+1}}" selected>
             {{ sprintf("%07s", 's'.$nr->id+1) }}

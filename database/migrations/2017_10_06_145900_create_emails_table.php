@@ -15,12 +15,13 @@ class CreateEmailsTable extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
+            $table->string('email', 20);
+            // $table->string('email', 60)->unique();
             $table->timestamps();
         });
         DB::table('emails')->insert([
           'id' => 1,
-          'email' => 'arend-jan@ziekenhuis-rotterdam.nl',
+          'email' => 'arend-jan',
           'created_at' => '2017-10-13 10:11:14',
           'updated_at' => '2017-10-13 10:11:14',
         ]);
