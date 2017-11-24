@@ -91,6 +91,15 @@ class pattientController extends Controller
       return $data;
     }
 
+    public function getRoomType($type_id) {
+      $rooms = Rooms::where('department_id', $type_id)->pluck('description', 'id');
+      $rooms_type = [];
+      foreach($rooms as $key => $value){
+        array_push($rooms_type, $value);
+      }
+      return array_unique($rooms_type);
+    }
+
     public function dismisPatient(Request $request) {
       $patient = Patient::findorFail($request->user_id);
       Dossier::where('patient_id', $patient->id)
@@ -107,13 +116,21 @@ class pattientController extends Controller
         ->first();
       $departments = Department::pluck('name', 'id');
       $nr = Dossier::orderBy('id','desc')->first();
+      $rooms = Rooms::where('department_id', 1)->pluck('description', 'id');
+
+      $rooms_type = [];
+      foreach($rooms as $key => $value){
+        array_push($rooms_type, $value);
+      }
+      $rooms_type = array_unique($rooms_type);
 
       if(!$patient) {
-        return view('layouts.newpatient')->with(compact('departments','emails', 'nr'));
+        return view('layouts.newpatient')->with(compact('departments','emails', 'nr', 'rooms', 'rooms_type'));
       }
       else {
+        $hasBed = Hospital_beds::where('patient_id', $patient->id)->first();
         $dossiers = Dossier::where('patient_id', $patient->id)->get();
-        return view('layouts.patient')->with(compact('departments', 'patient', 'emails', 'nr', 'dossiers', 'dossiers_last'));
+        return view('layouts.patient')->with(compact('departments', 'patient', 'emails', 'nr', 'dossiers', 'rooms', 'rooms_type', 'hasBed'));
       }
     }
 
@@ -128,12 +145,19 @@ class pattientController extends Controller
         'date_of_birth' => carbon::createFromFormat('d-m-yy', $request->inp_date_of_birth)->toDateTimeString(),
       ]);
 
+      $room = Rooms::where('description', $request->inp_room_name)->first();
+
       $patient_id = Patient::orderBy('id', 'desc')->first();
 
       $bed = Hospital_beds::where('status', 0)
         ->where('department_id', $request->inp_department)
+        ->where('room', $room->id)
         ->where('patient_id', null)
         ->first();
+
+        if(empty($bed) || empty($room)) {
+          return redirect('1')->withErrors(['msg' => 'Geen bed vrij!']);
+        }
 
       $bed->status = 1;
       $bed->patient_id = $patient->id;
@@ -182,9 +206,10 @@ class pattientController extends Controller
       if($dossier == 1) {
         return redirect('1')->withErrors(['msg' => 'Deze patient is al in het ziekenhuis']);
       }else {
-        $bed = Hospital_beds::where('status', 0)->where('department_id', $request->inp_department)->first();
-
-        if(empty($bed)) {
+        // dd($request->inp_room_name);
+        $room = Rooms::where('description', $request->inp_room_name)->first();
+        $bed = Hospital_beds::where('status', 0)->where('room', $room->id)->where('department_id', $request->inp_department)->first();
+        if(empty($bed) || empty($room)) {
           return redirect('1')->withErrors(['msg' => 'Geen bed vrij!']);
         }
 
@@ -220,5 +245,10 @@ class pattientController extends Controller
         'dossier' => $patient->latest,
       ];
       return $data;
+    }
+
+    public function getRoom($id){
+      $rooms = Rooms::where('department_id', $id);
+      return $room;
     }
 }

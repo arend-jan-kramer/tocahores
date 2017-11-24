@@ -434,6 +434,17 @@ body {
     &.right {
       float: right;
     }
+
+    &.options {
+        a.btn-cancel {
+          &.fill-width {
+            &:link {
+              width: 100%;
+              margin: 0;
+            }
+        }
+      }
+    }
     &.options {
       padding-top: 40px;
       input {

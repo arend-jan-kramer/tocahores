@@ -23,6 +23,7 @@ Route::middleware(['lock'])->group(function () {
   Route::get('/dossier/{id}', 'pattientController@getPatient');
   Route::get('/get/dossier/{id}', 'pattientController@getPatientScript');
   Route::get('/dossier/{patient_id}/{dossier_id}', 'pattientController@getPatientDossier');
+  Route::get('/roomstype/{type_id}', 'pattientController@getRoomType');
   Route::post('/dossier/create', 'pattientController@create');
   Route::post('/dossier/update', 'pattientController@update');
   Route::post('/dossier/remove', 'pattientController@dismisPatient');

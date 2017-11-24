@@ -11172,6 +11172,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -11299,6 +11303,20 @@ __webpack_require__(30);
       }
     }
   });
+  $('#getRooms').on('change', function () {
+    var keys = $(this).val();
+    var type = $('#getRooms option[value="' + keys + '"]:first').html();
+    console.log(type);
+    $('#inp_room_name').val(type);
+  });
+  $('#department_id').on('change', function () {
+    $.get('/roomstype/' + $('#department_id').val(), function (data) {
+      $('#getRooms').html('');
+      $.each(data, function (key, value) {
+        $('#getRooms').append('<option value="' + key + '">' + value + "</option>");
+      });
+    });
+  });
   $('.radiobutton input').on('click', function () {
     // var id = $(this).val();
     // console.log($(this).val());
@@ -11317,9 +11335,6 @@ __webpack_require__(30);
   });
 
   $('#dossier_id').on('change', function () {
-    // console.log($('option:selected').attr('class'));
-    // console.log($(this).val());
-    // console.log($('.getName').val());
     if ($('option:selected').attr('class') !== undefined) {
       $.get('/dossier/' + $('.getName').val() + '/' + $(this).val(), function (data) {
         $('.group .description').val(data.description).prop("disabled", true).addClass('lock');

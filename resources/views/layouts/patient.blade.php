@@ -48,13 +48,24 @@
         <label for="">Reden opnamen:</label>
         {{ Form::textarea('inp_reason', null, ["size" => '30x5', 'class' => 'description']) }}
       </div>
-      <div class="group">
-        <label for="">Afdeling</label>
-        {{ Form::select('inp_department', $departments, null) }}
-      </div>
+      @if(empty($hasBed))
+        <div class="group">
+          <label for="">Afdeling</label>
+          {{ Form::select('inp_department', $departments, null, ['id' => 'department_id']) }}
+        </div>
+        <div class="group">
+          <label for="">Type kamer:</label>
+          {{ Form::select('inp_room', $rooms_type, null, ['id' => 'getRooms']) }}
+          {{ Form::input('text', 'inp_room_name', null, ['id' => 'inp_room_name' ,'class' => 'hidden']) }}
+        </div>
+      @endif
       <div class="group right options">
+        @if(empty($hasBed))
         {{ Html::link('/1', 'Annuleren', ['class' => 'btn btn-cancel']) }}
-        {{ Form::submit('Vraag bed op', ['class' => 'btn btn-send']) }}
+        {{ Form::submit('Vraag bed op', ['class' => "btn btn-send" ]) }}
+        @else
+          {{ Html::link('/1', 'Annuleren', ['class' => 'btn btn-cancel fill-width']) }}
+        @endif
       </div>
       {{ Form::close() }}
     </div>
